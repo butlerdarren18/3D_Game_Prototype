@@ -7,9 +7,9 @@ class_name PlayerAnimationPlayer
 
 ## Obvious usage. [br] If not setting check the switch_animations method is being called and has not been altered.
 @export var speed_scales : Dictionary = {
-	"walk" : 1,
-	"idle" : 0.8,
-	"run" : 1
+	"walk" : 1.5,
+	"idle" : 1.2,
+	"run" : 1.5
 }
 
 ## This was originally set up with the FOSS godot plush character. 
@@ -22,7 +22,7 @@ class_name PlayerAnimationPlayer
 
 var animation : String = "idle"
 var backwards 
-func _physics_process(delta: float) -> void:
+func _input(event: InputEvent) -> void:
 	var is_movement_key_pressed : bool = false
 	var inputs = movement_keys.collection
 	
@@ -40,8 +40,7 @@ func _physics_process(delta: float) -> void:
 func set_animation(animation_name:String):
 	if current_animation != animation_name: 
 		speed_scale = speed_scales[animation_name]
-		if backwards: play_backwards(animation_name)
-		else: play(animation_name)
+		play(animation_name)
 
 func walk(): set_animation("walk")
 func run(): set_animation("run")
