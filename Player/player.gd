@@ -2,7 +2,7 @@ extends CharacterBody3D
 class_name Player 
 @onready var movement_keys : Dictionary = preload("res://Resources/DictionaryResource/movement_key_collection.tres").collection
 @onready var model = $godot_plush_model
-@onready var camera = $"../Camera3D"
+@export var camera : Camera3D
 @onready var camera_distance = global_position - camera.global_position
 var is_sprinting = false
 var last_angle 
@@ -19,7 +19,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("jump_key") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 
