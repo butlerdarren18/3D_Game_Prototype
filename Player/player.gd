@@ -9,6 +9,9 @@ var last_angle
 var regular_speed = 5.25
 const JUMP_VELOCITY = 4.5
 
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("escape"): EventBus.UI_CLOSE_REQUESTED.emit()
+
 func _physics_process(delta: float) -> void:
 	
 	# MOVE CAM WITH PLAYER 
@@ -32,7 +35,7 @@ func _physics_process(delta: float) -> void:
 	
 	# ROTATING THE PLAYER
 	new_angle = model.rotation_degrees.y 
-	var rotation_weight : float = 1
+	var rotation_weight : float = .075
 	
 	if Input.is_action_pressed(movement_keys["left"]):
 		new_angle = 90
@@ -41,16 +44,16 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_pressed(movement_keys["down"]): 
 		if last_angle < 0: new_angle = -180 
 		else: new_angle = 180 
-		rotation_weight = 0.1
+		rotation_weight = .1
 	elif Input.is_action_pressed(movement_keys["up"]):
 		new_angle = 0 
 		rotation_weight = 0.1
 	
 	if is_sprinting: rotation_weight *= 2
 	for child in get_children(): 
-		if child is not Camera3D:
+		if child is not Camera3D and child is not Control:
 			if child.rotation_degrees.y != new_angle:
-				child.rotation_degrees.y = lerpf(child.rotation_degrees.y, new_angle, .05)
+				child.rotation_degrees.y = lerpf(child.rotation_degrees.y, new_angle, rotation_weight)
 
 	last_angle = new_angle 
 	var speed = regular_speed 

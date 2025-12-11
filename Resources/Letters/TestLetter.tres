@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Letter" load_steps=2 format=3 uid="uid://dtjmnrndnd8ji"]
+
+[ext_resource type="Script" uid="uid://bs7j2w4adfy4p" path="res://Resources/Letters/letter.gd" id="1_r1wjd"]
+
+[resource]
+script = ExtResource("1_r1wjd")
+text = "Hello! Welcome to the game. This is the first functional letter to be printed to screen. Have fun!"
+received = true
+metadata/_custom_type_script = "uid://bs7j2w4adfy4p"
