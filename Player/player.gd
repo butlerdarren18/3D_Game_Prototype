@@ -33,6 +33,7 @@ func _physics_process(delta: float) -> void:
 	# ROTATING THE PLAYER
 	new_angle = model.rotation_degrees.y 
 	var rotation_weight : float = 1
+	
 	if Input.is_action_pressed(movement_keys["left"]):
 		new_angle = 90
 	elif Input.is_action_pressed(movement_keys["right"]): 

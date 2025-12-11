@@ -9,7 +9,8 @@ class_name PlayerAnimationPlayer
 @export var speed_scales : Dictionary = {
 	"walk" : 1.5,
 	"idle" : 1.2,
-	"run" : 1.5
+	"run" : 1.5, 
+	"fall": 1.5
 }
 
 ## This was originally set up with the FOSS godot plush character. 
@@ -18,11 +19,15 @@ class_name PlayerAnimationPlayer
 ## Current subkeys: "speed_scale", "name"* [br][br]
 ## Note: "name" should be the name of the animation in the player, otherwise it won't work
 
-
+var falling = false 
 
 var animation : String = "idle"
 var backwards 
-func _input(event: InputEvent) -> void:
+func _physics_process(delta: float) -> void:
+		# HANDLE JUMP 
+	if not $"../..".is_on_floor():
+		fall()
+		return
 	var is_movement_key_pressed : bool = false
 	var inputs = movement_keys.collection
 	
@@ -36,12 +41,16 @@ func _input(event: InputEvent) -> void:
 			if Input.is_action_pressed("sprint_key"): run()
 			else: walk()
 	if is_movement_key_pressed == false: idle()
+	
+
+	
 
 func set_animation(animation_name:String):
 	if current_animation != animation_name: 
 		speed_scale = speed_scales[animation_name]
 		play(animation_name)
 
+func fall(): set_animation("fall")
 func walk(): set_animation("walk")
 func run(): set_animation("run")
 func idle(): set_animation("idle")
